@@ -1,0 +1,15 @@
+services:
+  wahoo:
+      build: .
+      restart: unless-stopped
+      container_name: wahoo
+      environment:
+        DESTDIR: /app/wahoo/downloads
+        GARMIN_LOGIN: somebody@example.com
+        GARMIN_PASSWORD: secret
+        DOCKER_BUILDKIT: 1
+      volumes:
+        - ./wahoo/downloads/:/app/wahoo/downloads
+        - ./wahoo/:/app/wahoo/
+      ports:
+          - "42195:42195"

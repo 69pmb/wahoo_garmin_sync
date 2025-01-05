@@ -12,20 +12,24 @@ api.config['debug'] = True
 def save_and_upload(url):
     filename = os.path.basename(url)
     path = os.path.join(DESTDIR, filename)
-    print('filename: %s' % (filename, ))
+    print('Filename: %s' % (filename, ))
     if os.path.exists(path):
-        print('file already exists')
+        print('File already uploaded')
         return
     with urllib.request.urlopen(url) as r:
         with open(path, 'wb') as f:
             f.write(r.read())
-    print('saved')
+    print('File saved')
     garth.login(os.environ['GARMIN_LOGIN'], os.environ['GARMIN_PASSWORD'])
-    print('connected')
-    with open(path, 'rb') as f:
-        uploaded = garth.client.upload(f)
-        print(uploaded)
-    print('uploaded')
+    garth.save("~/.garth")
+    print('Connected to Garmin Connect')
+    try:
+        with open(path, 'rb') as f:
+            uploaded = garth.client.upload(f)
+            print(uploaded)
+        print('Workout successfully uploaded')
+    except Exception as e:
+        print('Upload failed:', e)
 
 @api.route('/', methods=['GET'])
 def get_root():
@@ -33,12 +37,10 @@ def get_root():
 
 @api.route('/webhook', methods=['POST'])
 def post_webhook():
-    print('post')
-    print('post')
+    print('Received post')
     data = request.get_json()
-    print('data', data)
     url = data['workout_summary']['file']['url']
-    print('url: %s' % (url, ))
+    print('Workout url: %s' % (url, ))
     thread = threading.Thread(target=save_and_upload, args=(url,))
     thread.start()
 
@@ -46,4 +48,4 @@ def post_webhook():
 
 if __name__ == '__main__':
     print('run')
-    api.run('0.0.0.0', 5000, debug=True)
+    api.run('0.0.0.0', 42195, debug=True)

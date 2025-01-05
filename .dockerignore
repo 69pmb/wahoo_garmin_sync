@@ -1,0 +1,11 @@
+**/docker-compose*
+**/compose.y*ml
+**/Dockerfile*
+**/__pycache__
+**/.dockerignore
+**/.env
+**/.git
+**/.gitignore
+**/.vscode
+LICENSE
+README.md
