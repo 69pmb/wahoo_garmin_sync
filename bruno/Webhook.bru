@@ -1,0 +1,25 @@
+meta {
+  name: Webhook
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://your_website_url.com/webhook
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "workout_summary": {
+      "file": {
+        "url": "https://cdn.wahooligan.com/wahoo-cloud/production/uploads/workout_file/file/jxre2UP3Lx_o6wF-8tdArw/2025-01-06-171681-ELEMNT_ROAM_F23E-852-0.fit"
+      }
+    }
+  }
+}

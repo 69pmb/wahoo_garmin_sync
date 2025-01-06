@@ -1,0 +1,19 @@
+meta {
+  name: Garmin
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://connectapi.garmin.com/upload-service/upload
+  body: multipartForm
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:multipart-form {
+  file: 
+}
